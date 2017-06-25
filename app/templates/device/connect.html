@@ -1,0 +1,31 @@
+<div ng-show="!dc.connecting">
+    <h2>Login in to {{ dc.device.name }} on {{ dc.device.ip }}
+    <form name="fv" ng-submit="dc.connect(dc.tempusername, dc.password)">
+        <div class="form-group label-floating">
+            <label class="control-label" for="username">Username</label>
+            <input  type="text" class="form-control fv" id="username"
+                ng-model="dc.tempusername" required />
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="password">Password</label>
+            <input  type="password" class="form-control fv" id="password"
+                ng-model="dc.password" required />
+        </div>
+        <div class="row" align="right">
+            <input type="submit" class="btn btn-primary" value="Connect"
+                ng-disabled="!fv.$valid">
+        </div>
+    </form>
+
+    <div class="alert alert-danger col-xs-10 col-xs-offset-1"
+            ng-show="dc.connect_failed"
+            style="font-size: 14px;">
+        <h4>Failed!</h4>
+        <p>{{ dc.error_message }}</p>
+    </div>
+</div>
+
+<div ng-show="dc.connecting">
+    Connecting to {{ dc.device.ip }} as {{ dc.tempusername }}
+</div>

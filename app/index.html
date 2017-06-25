@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="sshfdApp">
+    <head>
+        <meta charset="UTF-8">
+        <title>SSHfD v0.1.0</title>
+        <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../node_modules/ng-dialog/css/ngDialog.min.css">
+        <link rel="stylesheet" href="../node_modules/ng-dialog/css/ngDialog-theme-default.min.css">
+        <script>window.$ = window.jQuery = require('jquery');</script>
+        <script src="../node_modules/angular/angular.min.js"></script>
+        <script src="../node_modules/bootstrap-material-design/dist/js/material.min.js"></script>
+        <script src="../node_modules/ng-dialog/js/ngDialog.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/filters.js"></script>
+        <script src="js/app/app.controller.js"></script>
+        <script src="js/active_devices/active_devices.controller.js"></script>
+        <script src="js/device/device.controller.js"></script>
+        <script src="js/database/database.controller.js"></script>
+        <script src="js/ssh/ssh.controller.js"></script>
+        <script>$.material.init();</script>
+    </head>
+    <body style="height: 100%" ng-controller="AppController as ac">
+        <div id="app_loading" ng-show="!ac.loaded" align="center">
+            <div id="app_loading_text">
+                Please hold on while the program is loading
+            </div>
+        </div>
+        <div id="page" ng-cloak ng-show="ac.loaded">
+            <div id="sidemenu" ng-controller="ActiveDevicesController as ad">
+                <ng-include src="'templates/sidemenu.html'"></ng-include>
+            </div>
+
+            <div id="nodevice" class="content"
+                    ng-if="ac.selected_device === null && !ac.settings_selected">
+                ======No device selected====
+            </div>
+            <div id="device" class="content" ng-if="ac.selected_device != null"
+                    ng-controller="DeviceController as dc">
+                <div ng-include src="'templates/device/device.html'" onload="dc.select(ac.selected_device)">
+                </div>
+            </div>
+            <div id="settings" class="content" ng-if="ac.settings_selected">
+                <ng-include src="'templates/settings.html'"></ng-include>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<div class="well">
+    <form name="fv">
+        <div class="form-group label-floating is-empty">
+            <label class="control-label" for="device_name">Device name</label>
+            <input  type="text" class="form-control fv" id="device_name"
+                ng-model="ad.new_device.name" required />
+        </div>
+
+        <div class="form-group label-floating is-empty">
+            <label class="control-label" for="device_ip">Device IP</label>
+            <input  type="text" class="form-control fv" id="device_ip"
+                ng-model="ad.new_device.ip" required />
+        </div>
+
+        <div class="form-group label-floating is-empty">
+            <label class="control-label" for="username">Username</label>
+            <input  type="text" class="form-control fv" id="username"
+                ng-model="ad.new_device.username" />
+        </div>
+
+        <div class="form-group" align="right">
+            <input type="button" class="btn btn-default" value="Cancel"
+                ng-click="closeThisDialog()"/>
+            <input type="button" class="btn btn-primary" value="Add"
+                ng-disabled="!fv.$valid"
+                ng-click="closeThisDialog(ad.addDevice(ad.new_device))">
+        </div>
+    </form>
+</div>

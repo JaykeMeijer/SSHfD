@@ -1,0 +1,35 @@
+<div ng-if="!dc.device.connected">
+    <div ng-include src="'templates/device/connect.html'"></div>
+</div>
+<div ng-if="dc.device.connected">
+    <div class="row clearfix">
+        <ul id="device_nav" class="nav nav-pills col-xs-11">
+            <li ng-class="{active: dc.device.active_tab == 'info'}"
+                    ng-click="dc.showInfo()">
+                Info
+            </li>
+            <li  ng-class="{active: dc.device.active_tab == 'function_set' 
+                                    && dc.device.active_set == set}"
+                    ng-repeat="set in dc.function_set" ng-click="dc.showSet(set)">
+                {{ set.name }}
+            </li>
+            <li ng-class="{active: dc.device.active_tab == 'raw'}"
+                    ng-click="dc.showRaw()">
+                Raw
+            </li>
+        </ul>
+        <div id="logout" class="col-xs-1">
+            <input type="button" class="btn btn-danger" value="Disconnect"
+                ng-click="dc.disconnect()" style="right:50px"/>
+        </div>
+    </div>
+    <div ng-if="dc.device.active_tab == 'info'">
+        <div ng-include src="'templates/device/info.html'"></div>
+    </div>
+    <div ng-if="dc.device.active_tab == 'function_set'">
+        <div ng-include src="'templates/device/function_set.html'"></div>
+    </div>
+    <div ng-if="dc.device.active_tab == 'raw'">
+        <div ng-include src="'templates/device/raw.html'"></div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="row group">
+    <div class="row title">Devices {{ ad.devices | connectedCount }}</div>
+    <div class="row menu_entry" ng-repeat="device in ad.devices"
+            ng-show="ad.devices_loaded"
+            ng-class="{active: device == ac.selected_device, highlight: device.showDropdown}"
+            ng-click="ad.closeAllDropdowns(); ac.select_device(device)">
+        <span>
+            <i class="fa fa-circle" style="color: lightgreen" ng-if="device.connected"></i>
+            <i class="fa fa-circle-thin" ng-if="!device.connected"></i>
+            <span class="entry_title">{{ device.name }}</span>
+        </span>
+        <span class="more" ng-click="ad.toggleDeviceOptions(device, $event)">
+            <i class="fa fa-ellipsis-v rotate"
+                ng-class="{'rotated': device.showDropdown, 'unrotate': !device.showDropdown}"></i>
+            <!--<i class="fa fa-ellipsis-h" ng-if="device.showDropdown"></i>-->
+        </span>
+        <div class="dropdown"
+                ng-show="device.showDropdown">
+            <div class="dropdown-option"
+                    ng-click="ad.executeDropdown($event, device, 'settings');">
+                Settings
+            </div>
+            <div class="dropdown-option"
+                    ng-click="ad.executeDropdown($event, device, 'remove');">
+                Remove
+            </div>
+            <hr />
+            <div class="dropdown-option"
+                    ng-click="ad.executeDropdown($event, device, 'disconnect')"
+                    ng-class="{'disabled': !device.connected}">
+                Disconnect
+            </div>
+        </div>
+    </div>
+    <div class="row menu_entry" ng-click="ad.showAddDevice()">
+        <i class="fa fa-plus"></i>
+        <span class="entry_title">Add new</span>
+    </div>
+</div>
+
+<div class="row group">
+    <div class="row title">Application</div>
+    <div class="row menu_entry" ng-click="ac.settings()"
+            ng-class="{active: ac.settings_selected}">
+        Application settings
+    </div>
+    <div class="row menu_entry" ng-click="ac.exit()">
+        Exit
+    </div>
+</div>
