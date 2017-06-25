@@ -5,7 +5,7 @@
   "main": "main.js",
   "author": "Jayke Meijer",
   "scripts": {
-    "start": "node_modules\\electron\\dist\\electron.exe ."
+    "start": "electron ."
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
