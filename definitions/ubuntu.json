@@ -1,0 +1,28 @@
+{
+    "name": "Ubuntu",
+    "description": "Generic functions for Ubuntu-style Linux machines",
+    "functions": {
+        "system": [
+            {
+                "name": "shutdown",
+                "type": "single_command",
+                "root": true,
+                "command": "shutdown now"
+            },
+            {
+                "name": "reboot",
+                "type": "single_command",
+                "root": true,
+                "command": "reboot"
+            }
+        ],
+        "network": [
+            {
+                "name": "ifconfig",
+                "type": "output",
+                "root": false,
+                "command": "ifconfig"
+            }
+        ]
+    }
+}
