@@ -1,3 +1,17 @@
+sshfdApp.directive('onTab', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 9) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.onTab);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 sshfdApp.controller('DeviceController',
         function DeviceController($scope, $timeout, DataBase, SSH) {
     var dc = this;
@@ -47,6 +61,7 @@ sshfdApp.controller('DeviceController',
         SSH.setup(dc.device.ip, username, password, function(errorcode, ssh) {
             if (ssh != null) {
                 dc.connect_failed = false;
+                dc.device.tab = false;
                 dc.device.connection = ssh;
                 dc.device.connection.onMsg = dc.onMsg;
                 dc.device.connection.onClose = dc.onClose;
@@ -88,13 +103,23 @@ sshfdApp.controller('DeviceController',
         dc.device.input = '';
     }
 
+    dc.sendTab = function(command) {
+        dc.device.tab = true;
+        dc.device.connection.sendCommand(command + '\t');
+    }
+
     dc.onMsg = function(data) {
         $timeout(function() {
-            dc.device.raw_output += data;
+            if (dc.device.tab) {
+                dc.device.input = data;
+                dc.device.tab = false;
+            } else {
+                dc.device.raw_output += data;
+            }
             $timeout(function() {
                 d = $('#raw_output')
                 d.scrollTop(d.prop("scrollHeight") - d.prop("clientHeight"));
-            })
+            });
         });
     }
 
