@@ -51,6 +51,13 @@ body {
     margin-right: 0;
 }
 
+/* ===== Dialogs ===== */
+button.ngdialog-close {
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
 /* ===== Side menu ===== */
 #sidemenu .title {
     padding: 10px;
@@ -185,4 +192,38 @@ body {
     margin-left: 5%;
     padding: 10px;
     width: 90%;
+}
+
+/* ===== Add device dialog ===== */
+.definitions_selected span {
+    cursor: pointer;
+    padding-right: 16px;
+}
+
+.definitions_selected span:hover {
+    color: red;
+    padding-right: 0;
+}
+
+.definitions_selected span:hover:after {
+    content: '\f00d';
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    margin:0px 0px 0px 0px;
+    text-decoration:none;
+}
+
+table.found_definitions {
+    list-style-type: none;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+table.found_definitions td {
+    padding-left: 20px;
+}
+
+table.found_definitions tr:hover {
+    color: #009688;
 }

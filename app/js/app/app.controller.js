@@ -1,4 +1,4 @@
-sshfdApp.controller('AppController', function AppController($scope, $timeout, DataBase) {
+sshfdApp.controller('AppController', function AppController($scope, $timeout, DataBase, Definitions) {
     var ac = this;
     ac.loaded = false;
     ac.selected_device = null;
@@ -7,8 +7,10 @@ sshfdApp.controller('AppController', function AppController($scope, $timeout, Da
     function init() {
         // Initialize the application
         var db = DataBase;
-        var awaiting = 1;
+        var def = Definitions;
+        var awaiting = 2;
         db.init(callback);
+        def.init(callback);
 
         function callback() {
             awaiting--;

@@ -3,11 +3,12 @@
 
     sshfdApp.controller('ActiveDevicesController', ActiveDevicesController);
     ActiveDevicesController.$inject = ['$scope', '$timeout', 'DataBase',
-        'ngDialog'];
+        'Definitions', 'ngDialog'];
 
-    function ActiveDevicesController($scope, $timeout, DataBase, ngDialog) {
+    function ActiveDevicesController($scope, $timeout, DataBase, Definitions, ngDialog) {
         var ad = this;
         var db = DataBase;
+        ad.defs = Definitions;
         ad.devices = [];
         ad.devices_loaded = false;
 
@@ -37,8 +38,11 @@
             ad.new_device = {
                 name: "",
                 ip: "",
-                username: ""
+                username: "",
+                definitions: []
             }
+            ad.defs.listDefinitions('', ad.new_device.definitions);
+            ad.defs.definition_search = '';
             var dialog = ngDialog.open({
                 template: 'templates/addDevice.html',
                 className: 'ngdialog-theme-default',
@@ -46,12 +50,25 @@
             });
         }
 
+        ad.addDefinition = function(definition_name) {
+            ad.new_device.definitions.push(definition_name);
+            ad.defs.listDefinitions(ad.defs.definition_search, ad.new_device.definitions);
+        }
+
+        ad.removeDefinition = function(definition_name) {
+            ad.new_device.definitions.splice(
+                ad.new_device.definitions.indexOf(definition_name), 1
+            );
+            ad.defs.listDefinitions(ad.defs.definition_search, ad.new_device.definitions);
+        }
+
         ad.addDevice = function(device) {
             var device = {
                 name: device.name,
                 id: device.id,
                 ip: device.ip,
-                username: device.username
+                username: device.username,
+                definitions: device.definitions
             };
 
             db.insert('devices', device, function(err, newDev) {

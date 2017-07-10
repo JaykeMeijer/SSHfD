@@ -2,20 +2,47 @@
     <form name="fv">
         <div class="form-group label-floating is-empty">
             <label class="control-label" for="device_name">Device name</label>
-            <input  type="text" class="form-control fv" id="device_name"
+            <input type="text" class="form-control fv" id="device_name"
                 ng-model="ad.new_device.name" required />
         </div>
 
         <div class="form-group label-floating is-empty">
             <label class="control-label" for="device_ip">Device IP</label>
-            <input  type="text" class="form-control fv" id="device_ip"
+            <input type="text" class="form-control fv" id="device_ip"
                 ng-model="ad.new_device.ip" required />
         </div>
 
         <div class="form-group label-floating is-empty">
             <label class="control-label" for="username">Username</label>
-            <input  type="text" class="form-control fv" id="username"
+            <input type="text" class="form-control fv" id="username"
                 ng-model="ad.new_device.username" />
+        </div>
+
+        <hr />
+
+        <label>Choose definitions</label>
+
+        <div class="definitions_selected">
+            <span ng-repeat="def in ad.new_device.definitions" class="definition"
+                    ng-click="ad.removeDefinition(def)">
+                {{ def }}
+            </span>
+        </div>
+        <div class="form-group label-floating is-empty">
+            <label class="control-label" for="definitions">Search definitions</label>
+            <input type="text" class="form-control" id="definitions"
+                ng-model="ad.defs.definition_search"
+                ng-change="ad.defs.listDefinitions(ad.defs.definition_search,
+                                                   ad.new_device.definitions)"/>
+
+            Select applicable definitions:
+            <table class="found_definitions">
+                <tr ng-repeat="def in ad.defs.getFoundDefinitions()"
+                        ng-click="ad.addDefinition(def.name)">
+                    <td>{{ def.name }}</td>
+                    <td><i>{{ def.description }}</i><td>
+                </tr>
+            </table>
         </div>
 
         <div class="form-group" align="right">
