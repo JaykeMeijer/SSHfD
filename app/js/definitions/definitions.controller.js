@@ -14,7 +14,8 @@
             var funcs = {
                 init: init,
                 listDefinitions: listDefinitions,
-                getFoundDefinitions: getFoundDefinitions
+                getFoundDefinitions: getFoundDefinitions,
+                getDefinition: getDefinition
             }
             return funcs;
 
@@ -81,6 +82,12 @@
 
             function getFoundDefinitions() {
                 return defc.foundDefinitions;
+            }
+
+            function getDefinition(name) {
+                return defc.definitions.find(function(item) {
+                    return item.name == name;
+                });
             }
         }
 })();

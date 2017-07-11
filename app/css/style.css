@@ -227,3 +227,20 @@ table.found_definitions td {
 table.found_definitions tr:hover {
     color: #009688;
 }
+
+/* ===== Functions ===== */
+.function_item {
+    min-height: 100px;
+}
+
+.fi-title {
+    font-size: 18px;
+}
+
+.fi-description {
+    font-size: 12px;
+}
+
+.fi-btn {
+    float: right;
+}

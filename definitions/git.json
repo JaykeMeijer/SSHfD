@@ -1,0 +1,66 @@
+{
+    "name": "Git",
+    "description": "Functions as used by the GIT version control system",
+    "functions": {
+        "git": [
+            {
+                "name": "Set working directory",
+                "description": "Select the folder containing the git repository",
+                "type": "single_command_input",
+                "root": false,
+                "command": "cd $dir",
+                "input": [
+                    {
+                        "name": "Directory",
+                        "identifier": "dir",
+                        "type": "text",
+                        "description": "Home of the GIT directory"
+                    }
+                ]
+            },
+            {
+                "name": "Pull",
+                "description": "Pull the most recent changes from the remote",
+                "type": "single_command",
+                "root": false,
+                "command": "git pull"
+            },
+            {
+                "name": "Push",
+                "description": "Push all commits to the remote",
+                "type": "single_command",
+                "root": false,
+                "command": "git push"
+            },
+            {
+                "name": "Commit",
+                "description": "Commit all staged changes",
+                "type": "single_command_input",
+                "root": false,
+                "command": "git commit -m $message",
+                "input": [
+                    {
+                        "name": "Commit message",
+                        "identifier": "message",
+                        "type": "text",
+                        "description": "The commit message to add to this commit"
+                    },
+                    {
+                        "name": "Optional",
+                        "identifier": "message",
+                        "type": "text",
+                        "required": false,
+                        "description": "The commit message to add to this commit"
+                    }
+                ]
+            },
+            {
+                "name": "Status",
+                "description": "See the current status of the working tree",
+                "type": "output",
+                "root": false,
+                "command": "git status"
+            }
+        ]
+    }
+}

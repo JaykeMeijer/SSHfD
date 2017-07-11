@@ -13,7 +13,7 @@ sshfdApp.directive('onTab', function () {
 });
 
 sshfdApp.controller('DeviceController',
-        function DeviceController($scope, $timeout, DataBase, SSH) {
+        function DeviceController($scope, $timeout, DataBase, SSH, Definitions) {
     var dc = this;
     dc.connecting = false;
 
@@ -28,10 +28,6 @@ sshfdApp.controller('DeviceController',
             }
             dc.tempusername = dc.device.username;
             dc.connect_failed = false;
-            dc.function_set = [
-                {'name': 'System', 'functions': []},
-                {'name': 'Sensors', 'functions': []}
-            ];
         })
     }
 
@@ -92,6 +88,35 @@ sshfdApp.controller('DeviceController',
                 })
             }
         });
+
+        // Build function set
+        dc.function_set_obj = {};
+        dc.function_set = [];
+        if (dc.device.definitions !== undefined) {
+            dc.device.definitions.forEach(function(element) {
+                var definition = Definitions.getDefinition(element);
+                for (var fs in definition.functions) {
+                    if (definition.functions.hasOwnProperty(fs)) {
+                        if (fs in dc.function_set_obj) {
+                            dc.function_set_obj[fs] =
+                                dc.function_set_obj[fs].concat(definition.functions[fs])
+                        } else {
+                            dc.function_set_obj[fs] = [].concat(definition.functions[fs])
+                        }
+                    }
+                }
+            }, this);
+
+            // Parse function set object to function set list
+            for (var fs_name in dc.function_set_obj) {
+                if (dc.function_set_obj.hasOwnProperty(fs_name)) {
+                    dc.function_set.push({
+                        "name": fs_name,
+                        "functions": dc.function_set_obj[fs_name]
+                    });
+                }
+            }
+        }
     }
 
     dc.disconnect = function() {

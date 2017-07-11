@@ -1,2 +1,3 @@
-Function set:
-{{ dc.device.active_set.name }}
+<div ng-repeat="fs in dc.device.active_set.functions">
+    <div ng-include="'templates/functions/' + fs.type + '.html'"></div>
+</div>

@@ -5,12 +5,14 @@
         "system": [
             {
                 "name": "shutdown",
+                "description": "Shutdown the system",
                 "type": "single_command",
                 "root": true,
                 "command": "shutdown now"
             },
             {
                 "name": "reboot",
+                "description": "Reboot the system",
                 "type": "single_command",
                 "root": true,
                 "command": "reboot"
@@ -19,6 +21,7 @@
         "network": [
             {
                 "name": "ifconfig",
+                "description": "See the network configuration of the device",
                 "type": "output",
                 "root": false,
                 "command": "ifconfig"

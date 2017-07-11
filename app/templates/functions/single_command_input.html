@@ -1,0 +1,21 @@
+<div class="well clearfix function_item col-xs-4">
+    <div class="fi-title">{{ fs.name }}</div>
+    <div class="fi-content">
+        <div class="fi-description">{{ fs.description }}</div>
+        <form name="fv">
+            <div class="form-group label-floating is-empty" ng-repeat="ipt in fs.input">
+                <label class="control-label" for="{{ 'input-' + ipt.identifier }}">
+                    {{ ipt.name }}
+                </label>
+                <input type="{{ ipt.type }}"
+                    class="form-control" id="{{ 'input-' + ipt.identifier }}"
+                    ng-required="ipt.required === undefined || ipt.required"
+                    ng-model="input[ipt.identifier]" />
+                <p class="help-block">{{ ipt.description }} </p>
+            </div>
+            <input type="button" class="btn btn-primary fi-btn"
+                ng-disabled="!fv.$valid"
+                value="Execute" />
+        </form>
+    </div>
+</div>
