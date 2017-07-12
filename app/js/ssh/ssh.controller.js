@@ -72,6 +72,10 @@
             ssh.sendCommand = function(command) {
                 ssh.stream.write(command);
             }
+
+            ssh.sendSudo = function(command) {
+                ssh.stream.write('sudo ' + command);
+            }
             return ssh;
         }
     }

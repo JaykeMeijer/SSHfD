@@ -1,7 +1,10 @@
-<div class="well clearfix function_item col-xs-4">
+<div class="well clearfix function_item col-xs-4" ng-controller="SingleCommandController as sc">
     <div class="fi-title">{{ fs.name }}</div>
     <div class="fi-content">
         <div class="fi-description">{{ fs.description }}</div>
-        <button class="btn btn-primary fi-btn">Execute</button>
+        <button class="btn btn-primary fi-btn"
+                ng-click="sc.send(dc, fs)">
+            Execute
+        </button>
     </div>
 </div>

@@ -128,6 +128,11 @@ sshfdApp.controller('DeviceController',
         dc.device.input = '';
     }
 
+    dc.sendSudo = function(command) {
+        dc.device.connection.sendSudo(command + '\n');
+        dc.device.input = '';
+    }
+
     dc.sendTab = function(command) {
         dc.device.tab = true;
         dc.device.connection.sendCommand(command + '\t');
