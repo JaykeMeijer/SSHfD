@@ -16,6 +16,7 @@ sshfdApp.controller('DeviceController',
         function DeviceController($scope, $timeout, DataBase, SSH, Definitions) {
     var dc = this;
     dc.connecting = false;
+    dc.temp_data = '';
 
     dc.select = function(device) {
         $timeout(function() {
@@ -123,12 +124,19 @@ sshfdApp.controller('DeviceController',
         dc.device.connection.close();
     }
 
-    dc.sendRaw = function(command) {
+    dc.sendRaw = function(command, response_handler) {
+        if (response_handler !== undefined) {
+            dc.temp_onMsg = response_handler;
+        }
+        console.log('sending ' + command);
         dc.device.connection.sendCommand(command + '\n');
         dc.device.input = '';
     }
 
     dc.sendSudo = function(command) {
+        if (response_handler !== undefined) {
+            dc.temp_onMsg = response_handler;
+        }
         dc.device.connection.sendSudo(command + '\n');
         dc.device.input = '';
     }
@@ -139,12 +147,23 @@ sshfdApp.controller('DeviceController',
     }
 
     dc.onMsg = function(data) {
+        data = String.fromCharCode.apply(null, new Uint16Array(data));
         $timeout(function() {
             if (dc.device.tab) {
                 dc.device.input = data;
                 dc.device.tab = false;
             } else {
                 dc.device.raw_output += data;
+            }
+            if(dc.temp_onMsg !== undefined && dc.temp_onMsg !== null) {
+                if (data.endsWith('$ ')) {
+                    // Finished TODO: More robust, generic detection
+                    dc.temp_onMsg(dc.temp_data);
+                    dc.temp_onMsg = null;
+                    dc.temp_data = '';
+                } else {
+                    dc.temp_data += data;
+                }
             }
             $timeout(function() {
                 d = $('#raw_output')

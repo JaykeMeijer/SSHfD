@@ -101,11 +101,11 @@ button.ngdialog-close {
 }
 
 #sidemenu .menu_entry .more .rotate.unrotate {
-    animation: rotate0 0.2s ease-in-out forwards;
+    animation: rotate0 0.1s ease-in-out forwards;
 }
 
 #sidemenu .menu_entry .more .rotate.rotated {
-    animation: rotate90 0.2s ease-in-out forwards;
+    animation: rotate90 0.1s ease-in-out forwards;
 }
 
 @keyframes rotate0 {
@@ -226,6 +226,10 @@ table.found_definitions td {
 
 table.found_definitions tr:hover {
     color: #009688;
+}
+
+.dialog_wide .ngdialog-content {
+    width: 900px !important;
 }
 
 /* ===== Functions ===== */
