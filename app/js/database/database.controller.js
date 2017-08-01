@@ -13,6 +13,7 @@
             init: init,
             insert: insert,
             remove: remove,
+            update: update,
             getById: getById,
             all: all,
             find: find
@@ -49,6 +50,17 @@
         function insert(type, record, callback) {
             if (db[type] !== undefined) {
                 db[type].insert(record, function(err, newDoc) {
+                    if (callback !== undefined){callback(err, newDoc)};
+                });
+            } else {
+                console.error('Unknown database');
+                if (callback !== undefined){callback('Unknown database', null)};
+            }
+        }
+
+        function update(type, query, new_record, callback) {
+            if (db[type] !== undefined) {
+                db[type].update(query, new_record, function(err, newDoc) {
                     if (callback !== undefined){callback(err, newDoc)};
                 });
             } else {

@@ -62,6 +62,18 @@
             ad.defs.listDefinitions(ad.defs.definition_search, ad.new_device.definitions);
         }
 
+        ad.addDefinitionEdit = function(definition_name) {
+            ad.edit_device.definitions.push(definition_name);
+            ad.defs.listDefinitions(ad.defs.definition_search, ad.edit_device.definitions);
+        }
+
+        ad.removeDefinitionEdit = function(definition_name) {
+            ad.edit_device.definitions.splice(
+                ad.edit_device.definitions.indexOf(definition_name), 1
+            );
+            ad.defs.listDefinitions(ad.defs.definition_search, ad.edit_device.definitions);
+        }
+
         ad.addDevice = function(device) {
             var device = {
                 name: device.name,
@@ -81,9 +93,42 @@
             });
         }
 
+        ad.storeDevice = function(device) {
+            var device = {
+                name: device.name,
+                _id: device._id,
+                ip: device.ip,
+                username: device.username,
+                definitions: device.definitions
+            };
+
+            db.update('devices', {_id: device._id}, device, function(err, newDev) {
+                if (err == null) {
+                    console.log('Succesfully updated device');
+                    loadDevices();
+                } else {
+                    console.log('Failed to add device: ' + err);
+                }
+            });
+        }
+
+        ad.showDeviceSettings = function(device) {
+            ad.edit_device = jQuery.extend(true, {}, device);
+            if(ad.edit_device.definitions === undefined)  {
+                ad.edit_device.definitions = [];
+            }
+
+            ad.defs.listDefinitions('', ad.edit_device.definitions);
+            ad.defs.definition_search = '';
+
+            var dialog = ngDialog.open({
+                template: 'templates/editDevice.html',
+                className: 'ngdialog-theme-default',
+                scope: $scope
+            });
+        }
+
         ad.removeDevice = function(device) {
-            console.log("removing")
-            console.log(device);
             db.remove('devices', {_id: device._id}, {}, function(err, numRemove) {
                 if (err == null) {
                     console.log('Removed device');

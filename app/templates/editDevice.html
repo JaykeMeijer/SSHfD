@@ -1,0 +1,56 @@
+<div class="well">
+    <form name="fv">
+        <div class="form-group label-floating">
+            <label class="control-label" for="device_name">Device name</label>
+            <input type="text" class="form-control fv" id="device_name"
+                ng-model="ad.edit_device.name" required />
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="device_ip">Device IP</label>
+            <input type="text" class="form-control fv" id="device_ip"
+                ng-model="ad.edit_device.ip" required />
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="username">Username</label>
+            <input type="text" class="form-control fv" id="username"
+                ng-model="ad.edit_device.username" />
+        </div>
+
+        <hr />
+
+        <label>Definitions</label>
+
+        <div class="definitions_selected">
+            <span ng-repeat="def in ad.edit_device.definitions" class="definition"
+                    ng-click="ad.removeDefinitionEdit(def)">
+                {{ def }}
+            </span>
+        </div>
+        <div class="form-group label-floating is-empty">
+            <label class="control-label" for="definitions">Search definitions</label>
+            <input type="text" class="form-control" id="definitions"
+                ng-model="ad.defs.definition_search"
+                ng-change="ad.defs.listDefinitions(ad.defs.definition_search,
+                                                   ad.edit_device.definitions)"/>
+
+            Select applicable definitions:
+            <table class="found_definitions">
+                <tr ng-repeat="def in ad.defs.getFoundDefinitions()"
+                        ng-click="ad.addDefinitionEdit(def.name)">
+                    <td>{{ def.name }}</td>
+                    <td><i>{{ def.description }}</i><td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="form-group" align="right">
+            <input type="button" class="btn btn-default" value="Cancel"
+                ng-click="closeThisDialog()"/>
+            <input type="button" class="btn btn-primary" value="Save"
+                ng-disabled="!fv.$valid"
+                ng-click="closeThisDialog(ad.storeDevice(ad.edit_device))">
+        </div>
+    </form>
+</div>
