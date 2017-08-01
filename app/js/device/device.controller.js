@@ -133,7 +133,7 @@ sshfdApp.controller('DeviceController',
         dc.device.input = '';
     }
 
-    dc.sendSudo = function(command) {
+    dc.sendSudo = function(command, response_handler) {
         if (response_handler !== undefined) {
             dc.temp_onMsg = response_handler;
         }
